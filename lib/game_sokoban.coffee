@@ -89,6 +89,7 @@ class GameSokoban
     GameSokoban.FREE
 
   get_level: ->
+  	@refresh_cells()
   	@cells2ascii()
 
   sokoban_pos: -> @_sokoban_pos
@@ -100,9 +101,46 @@ class GameSokoban
   	return direction in d_keys
 
   sokoban_move: (direction) ->
-  	return unless @valid_direction(direction)
-  	new_pos = @_new_pos_by_direction(@_sokoban_pos, direction)
-  	@_sokoban_pos = new_pos
+    return unless @valid_direction(direction)
+    new_pos = @_new_pos_by_direction(@_sokoban_pos, direction)
+    element_at_pos = @element_at_pos(new_pos)
+    if element_at_pos in [GameSokoban.FREE, GameSokoban.GOAL]
+      @_sokoban_pos = new_pos
+    if element_at_pos == GameSokoban.BOX
+      if @is_box_movable(new_pos, direction)
+        @move_box(new_pos, direction)
+        @_sokoban_pos = new_pos
+    
+  	
+  is_box_movable: (pos, direction) ->
+    element_at_pos = @element_at_pos @_new_pos_by_direction(pos, direction)
+    return true if element_at_pos in [GameSokoban.FREE, GameSokoban.GOAL]
+    false
+
+  move_box: (pos, direction) ->
+    box = @get_box_at(pos)
+    vector = GameSokoban.DIRECTIONS[direction]
+    for k, d of vector
+      box[k] += d
+
+  get_box_at: (pos) ->
+    for box_pos in @_boxes
+      return box_pos if @_is_pos_eq(box_pos,  pos)
+    
+
+  boxes: -> @_boxes
+
+  # inner arrays to cells
+  refresh_cells: ->
+    new_cells = []
+    for row_pos in [0..@_level_size.max_row]
+      new_cells[row_pos] = []
+      for col_pos in [0..@_level_size.max_col]
+        cur_pos = {col: col_pos, row: row_pos}
+        cell = @get_cell_at(cur_pos)
+        new_cells[row_pos][col_pos] = cell
+    @level_cells = new_cells
+
 
   _clone_pos: (pos) ->
   	{col: pos.col, row: pos.row}
@@ -110,8 +148,8 @@ class GameSokoban
   _new_pos_by_direction: (pos, direction) ->
   	_pos = @_clone_pos(pos)
   	delta = GameSokoban.DIRECTIONS[direction]
-  	_pos.col += delta.col if delta.col
-  	_pos.row += delta.row if delta.row
+  	for k, v of delta
+  	  _pos[k] += v
   	_pos
 
 

@@ -136,3 +136,83 @@ describe "describe GameSokoban", ->
 
         game.sokoban_move 'right'
         expect( game.sokoban_pos() ).toEqual { col: 3, row: 2}
+
+#      it "передвижение на цель возможно", ->
+#        game = new GameSokoban
+#        game.set_level ' @. #'
+#        game.sokoban_move 'right'
+#        
+#        expect( game.get_level() ).toEqual '  + #'
+
+    describe "перемещения на стену", ->
+      it "координаты не меняются", ->
+        game = new GameSokoban
+        game.set_level LEVEL1
+        initial_pos = game.sokoban_pos()
+
+        game.sokoban_move 'up'
+        expect( game.sokoban_pos() ).toEqual initial_pos
+
+        game.sokoban_move 'down'
+        expect( game.sokoban_pos() ).toEqual initial_pos
+      
+        game.sokoban_move 'left'
+        expect( game.sokoban_pos() ).toEqual initial_pos
+
+    describe "перемещение ящика", ->
+      describe "#is_box_movable?", ->
+        it "перемещение ящика возможно", ->
+          game = new GameSokoban
+          game.set_level ' @$  '
+          expect( game.is_box_movable({col: 2, row: 0}, 'right') ).toBeTruthy()
+
+          game.set_level ' @$. '
+          expect( game.is_box_movable({col: 2, row: 0}, 'right') ).toBeTruthy()
+
+        it "перемещение ящика невозможно", ->
+          game = new GameSokoban
+          game.set_level ' @$# '
+          expect( game.is_box_movable({col: 2, row: 0}, 'right') ).toBeFalsy()
+
+          game.set_level ' @$$ '
+          expect( game.is_box_movable({col: 2, row: 0}, 'right') ).toBeFalsy()
+
+          game.set_level ' @$* '
+          expect( game.is_box_movable({col: 2, row: 0}, 'right') ).toBeFalsy()
+
+        it "перемещение ящика стоящего на цели возможно", ->
+          game = new GameSokoban
+          game.set_level ' @*  '
+          expect( game.is_box_movable({col: 2, row: 0}, 'right') ).toBeTruthy()
+
+          game.set_level ' @*. '
+          expect( game.is_box_movable({col: 2, row: 0}, 'right') ).toBeTruthy()
+
+        it "перемещение ящика стоящего на цели невозможно", ->
+          game = new GameSokoban
+          game.set_level ' @*# '
+          expect( game.is_box_movable({col: 2, row: 0}, 'right') ).toBeFalsy()
+        
+          game.set_level ' @*$ '
+          expect( game.is_box_movable({col: 2, row: 0}, 'right') ).toBeFalsy()
+
+          game.set_level ' @** '
+          expect( game.is_box_movable({col: 2, row: 0}, 'right') ).toBeFalsy()
+
+      it "#boxes", ->
+        game = new GameSokoban
+        game.set_level '#@$ #'
+        expect( game.boxes() ).toEqual [{col: 2, row: 0}]
+
+      it "отрисовка перемещения", ->
+        game = new GameSokoban
+        game.set_level '#@$ #'
+        game.sokoban_move 'right'
+        expect( game.get_level() ).toEqual '# @$#'
+
+      it "отрисовка нельзя переместить", ->
+        game = new GameSokoban
+        game.set_level '#@$$#'
+        game.sokoban_move 'right'
+
+        expect( game.get_level() ).toEqual '#@$$#'
