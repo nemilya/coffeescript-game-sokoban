@@ -37,22 +37,24 @@ https://github.com/nemilya/coffeescript-spec-demo
 Заполняем в спецификацию, делаем одну спеку с проверкой на 
 инициализацию класса:
 
+```coffeescript
     {GameSokoban} = require('../lib/game_sokoban')
 
     describe "describe GameSokoban", ->
       it "инициализация класса", ->
         game = new GameSokoban()
         expect(game).toBeDefined()
-
+```
 
 
 Заполняем в класс:
 
+```coffeescript
     class GameSokoban
 
 
     exports.GameSokoban = GameSokoban
-
+```
 
 Не забываем `exports.GameSokoban = GameSokoban` - иначе класс не будет виден "снаружи".
 
@@ -140,29 +142,32 @@ https://github.com/nemilya/coffeescript-spec-demo
 
 И не забывайте, что без скобок, это будет "указатель на функцию"
 
-   @refresh_cells
+    @refresh_cells
 
 это не то же самое что:
 
-   @refresh_cells()
+    @refresh_cells()
 
 Экономьте своё время :)
 
 
 Изменяем экспорт в классе:
 
+```coffeescript
     root = exports ? this
     root.GameSokoban = GameSokoban
+```
 
 Чтобы и в браузере подключалось.
 
 Компилируем CoffeeScript в JavaScript:
 
-   coffee -c game_sokoban.coffee
+    coffee -c game_sokoban.coffee
 
 Создаём папку `html` - переносим туда js файл, и создаём html файл, 
 где инициализируем класс, и получаем управление от пользователя:
 
+```html
     <html>
       <head>
         <title>CoffeeScript Game Sokoban</title>
@@ -212,3 +217,4 @@ https://github.com/nemilya/coffeescript-spec-demo
           </table>
         </body>
     </html>
+```
