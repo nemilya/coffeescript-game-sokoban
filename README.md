@@ -82,7 +82,7 @@ exports.GameSokoban = GameSokoban
 Как это выглядит: <a href="https://raw.github.com/nemilya/coffeescript-game-sokoban/master/start.png">start.png</a>
 
 
-Делаем инициализацию Git:
+Делаем инициализацию `Git`:
 
     git init
 
@@ -92,8 +92,8 @@ exports.GameSokoban = GameSokoban
 
 И делаем 
 
-   git add .
-   git commit -m "init"
+    git add .
+    git commit -m "init"
 
 Теперь текущее состояние добавлено в `git` репозиторий, локально.
 
@@ -104,15 +104,18 @@ exports.GameSokoban = GameSokoban
 
 При переносе, конструкция вида на Ruby:
 
-    it "text" do
-      ...
-    end
+```ruby
+  it "text" do
+    ...
+  end
+```
 
 Заменяется на CoffeeScript, вида:
 
-    it "text", ->
-      ....
-
+```coffeescript
+  it "text", ->
+    ....
+```
 
 Сделали загрузку уровня `set_level`, и получение элементов в ячейке `element_at_pos`
 
@@ -129,12 +132,15 @@ exports.GameSokoban = GameSokoban
 
 Это:
 
-    expect( game.valid_direction('up') ).toBeTruthy
-
+```coffeescript
+  expect( game.valid_direction('up') ).toBeTruthy
+```
 
 Совсем не это:
 
-    expect( game.valid_direction('up') ).toBeTruthy()
+```coffeescript
+  expect( game.valid_direction('up') ).toBeTruthy()
+```
 
 В первом случае не будет никакой ошибки - т.к. проверка вообще не будет выполнена.
 
@@ -144,13 +150,20 @@ exports.GameSokoban = GameSokoban
 
 И не забывайте, что без скобок, это будет "указатель на функцию"
 
-    @refresh_cells
+```coffeescript
+  @refresh_cells
+```
 
 это не то же самое что:
 
-    @refresh_cells()
+```coffeescript
+  @refresh_cells()
+```
 
 Экономьте своё время :)
+
+
+Вот вся история коммитов, до полной реализации спецификации: https://github.com/nemilya/coffeescript-game-sokoban/commits/master
 
 
 Изменяем экспорт в классе:
