@@ -33,17 +33,75 @@ class GameSokoban
   	@_info.box_on_goal_cnt = 0
   	@_level_size = { max_row: 0, max_col: 0 }
   	@_level_size.max_row = @level_cells.length - 1
+  	@_sokoban_pos = {}
+  	@_walls = []
+  	@_boxes = []
+  	@_goals = []
+  	pos_row = 0
   	for row in @level_cells
+  		pos_col = 0
   		@_level_size.max_col = row.length-1 if row.length-1 > @_level_size.max_col
   		for cell in row
-  			@_info.box_cnt++      if cell in [GameSokoban.BOX, GameSokoban.BOX_ON_GOAL]
-  			@_info.sokoban_cnt++  if cell in [GameSokoban.SOKOBAN, GameSokoban.SOKOBAN_ON_GOAL]
-  			@_info.goals_cnt++    if cell in [GameSokoban.GOAL, GameSokoban.SOKOBAN_ON_GOAL, GameSokoban.BOX_ON_GOAL]
+  			cur_pos = {row: pos_row, col: pos_col}
+
+  			if cell is GameSokoban.WALL
+  				@_walls.push(cur_pos) 
+
+  			if cell in [GameSokoban.SOKOBAN, GameSokoban.SOKOBAN_ON_GOAL]
+  				@_info.sokoban_cnt++  
+  				@_sokoban_pos = cur_pos
+
+  			if cell in [GameSokoban.BOX, GameSokoban.BOX_ON_GOAL]
+  				@_boxes.push(cur_pos)
+  				@_info.box_cnt++
+
+  			if cell in [GameSokoban.GOAL, GameSokoban.SOKOBAN_ON_GOAL, GameSokoban.BOX_ON_GOAL]
+  				@_goals.push(cur_pos)
+  				@_info.goals_cnt++    
+
   			@_info.box_on_goal_cnt++  if cell is GameSokoban.BOX_ON_GOAL
+  			pos_col++
+  		pos_row++
   			  
   level_size: -> @_level_size
 
   level_valid: ->
   	@_info.sokoban_cnt == 1 and @_info.box_cnt > 0 and @_info.goals_cnt == @_info.box_cnt
+
+  get_cell_at: (pos) ->
+    return GameSokoban.WALL if @is_wall_at_pos(pos)
+
+    if @is_sokoban_at_pos(pos)
+      return GameSokoban.SOKOBAN_ON_GOAL if @is_goal_at_pos(pos)
+      return GameSokoban.SOKOBAN
+
+    if @is_box_at_pos(pos)
+      return GameSokoban.BOX_ON_GOAL if @is_goal_at_pos(pos)
+      return GameSokoban.BOX
+
+    return GameSokoban.GOAL if @is_goal_at_pos(pos)
+    GameSokoban.FREE
+  
+  is_wall_at_pos: (pos) ->
+  	@_is_pos_in_array @_walls, pos
+
+  is_sokoban_at_pos: (pos) ->
+  	@_is_pos_eq(pos, @_sokoban_pos)
+
+  is_box_at_pos: (pos) ->
+  	@_is_pos_in_array @_boxes, pos
+
+  is_goal_at_pos: (pos) ->
+  	@_is_pos_in_array @_goals, pos
+
+  _is_pos_eq: (pos1, pos2) ->
+    pos1.col == pos2.col and pos1.row == pos2.row
+
+  _is_pos_in_array: (arr, pos) ->
+  	for _pos in arr
+  		return true if @_is_pos_eq pos, _pos
+  	false
+
+
 
 exports.GameSokoban = GameSokoban

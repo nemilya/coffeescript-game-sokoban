@@ -66,3 +66,13 @@ describe "describe GameSokoban", ->
       game = new GameSokoban
       game.set_level LEVEL2
       expect( game.level_valid() ).toBeFalsy()
+
+    it "#get_cell_at", ->
+      game = new GameSokoban
+      game.set_level LEVEL1
+
+      # на базе внутреннего представления
+      expect( game.get_cell_at({col: 1, row: 1}) ).toEqual GameSokoban.SOKOBAN
+      expect( game.get_cell_at({col: 0, row: 0}) ).toEqual GameSokoban.WALL
+      expect( game.get_cell_at({col: 3, row: 1}) ).toEqual GameSokoban.BOX
+      expect( game.get_cell_at({col: 5, row: 1}) ).toEqual GameSokoban.GOAL
