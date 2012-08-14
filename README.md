@@ -147,3 +147,68 @@ https://github.com/nemilya/coffeescript-spec-demo
    @refresh_cells()
 
 Экономьте своё время :)
+
+
+Изменяем экспорт в классе:
+
+    root = exports ? this
+    root.GameSokoban = GameSokoban
+
+Чтобы и в браузере подключалось.
+
+Компилируем CoffeeScript в JavaScript:
+
+   coffee -c game_sokoban.coffee
+
+Создаём папку `html` - переносим туда js файл, и создаём html файл, 
+где инициализируем класс, и получаем управление от пользователя:
+
+    <html>
+      <head>
+        <title>CoffeeScript Game Sokoban</title>
+        <script src="game_sokoban.js"></script>
+      </head>
+        <body>
+
+        <h1>CoffeeScript Game Sokoban</h1>
+
+        <pre id="level" style="font-family: Courier;">
+         #########
+         #  #   .#
+         #@$ $   #
+         # $ ##..#
+         #   #####
+         #########
+        </pre>
+
+        <script>
+          var game = new GameSokoban();
+          var field = document.getElementById('level');
+          game.set_level(field.innerHTML);
+
+          function move(direction){
+            game.sokoban_move(direction);
+            screen = game.get_level();
+            field.innerHTML = screen;
+          }
+        </script>
+
+          <table>
+            <tr>
+              <td></td>
+              <td align="center"><button onclick="move('up')" >Up</button></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><button onclick="move('left')" >Left</button></td>
+              <td></td>
+              <td><button onclick="move('right')" >Right</button></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><button onclick="move('down')" >Down</button></td>
+              <td></td>
+            </tr>
+          </table>
+        </body>
+    </html>

@@ -21,7 +21,7 @@ class GameSokoban
   	@level_cells = []
   	rows = level.split /\n/
   	for row in rows
-  		next if row == ''
+  		continue if row == ''
   		cells = row.split //
   		@level_cells.push(cells)
     @init_info()
@@ -181,4 +181,5 @@ class GameSokoban
 
 
 
-exports.GameSokoban = GameSokoban
+root = exports ? this
+root.GameSokoban = GameSokoban
