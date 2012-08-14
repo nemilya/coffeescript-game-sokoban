@@ -1,6 +1,8 @@
 ﻿Игра Sokoban на CoffeeScript
 ============================
 
+Работающее [демо](http://nemilya.github.com/coffeescript-game-sokoban/game_sokoban.html)
+
 Миграция Ruby кода из проекта: https://github.com/nemilya/ruby-game-sokoban
 
 Спеки, класс.
@@ -77,7 +79,7 @@ exports.GameSokoban = GameSokoban
 * `1 assertion` - это наша проверка `expect(...).toBeDefined()`
 
 
-Как это выглядит: start.png
+Как это выглядит: <a href="https://raw.github.com/nemilya/coffeescript-game-sokoban/master/start.png">start.png</a>
 
 
 Делаем инициализацию Git:
