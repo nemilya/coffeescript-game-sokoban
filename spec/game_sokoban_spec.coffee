@@ -76,3 +76,9 @@ describe "describe GameSokoban", ->
       expect( game.get_cell_at({col: 0, row: 0}) ).toEqual GameSokoban.WALL
       expect( game.get_cell_at({col: 3, row: 1}) ).toEqual GameSokoban.BOX
       expect( game.get_cell_at({col: 5, row: 1}) ).toEqual GameSokoban.GOAL
+
+    it "получение уровня", ->
+      game = new GameSokoban
+      game.set_level LEVEL1
+      expect( game.get_level() ).toEqual LEVEL1
+    

@@ -17,7 +17,7 @@ class GameSokoban
   	for row in rows
   		next if row == ''
   		cells = row.split //
-  		@level_cells.push(row)
+  		@level_cells.push(cells)
     @init_info()
 
   element_at_pos: (pos) ->
@@ -81,7 +81,17 @@ class GameSokoban
 
     return GameSokoban.GOAL if @is_goal_at_pos(pos)
     GameSokoban.FREE
-  
+
+
+  get_level: ->
+  	@cells2ascii()
+
+  cells2ascii: ->
+  	rows = []
+  	for row in @level_cells
+  		rows.push row.join('')
+  	rows.join("\n")
+
   is_wall_at_pos: (pos) ->
   	@_is_pos_in_array @_walls, pos
 
