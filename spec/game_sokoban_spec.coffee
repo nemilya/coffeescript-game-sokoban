@@ -14,6 +14,13 @@ LEVEL2 = "
 #   +*#\n
 #######"
 
+# 
+LEVEL3 = "
+#####\n
+#   #\n
+# @ #\n
+#   #\n
+#####"
 
 describe "describe GameSokoban", ->
   it "инициализация класса", ->
@@ -96,4 +103,13 @@ describe "describe GameSokoban", ->
       expect( game.valid_direction('right') ).toBeTruthy()
 
       expect( game.valid_direction('jump') ).toBeFalsy()
+
+    describe "свободное передвижение", ->
+      it "вверх", ->
+        game = new GameSokoban
+        game.set_level LEVEL3
+        expect( game.sokoban_pos() ).toEqual { col: 2, row: 2}
+
+        game.sokoban_move 'up'
+        expect( game.sokoban_pos() ).toEqual { col: 2, row: 1}
 

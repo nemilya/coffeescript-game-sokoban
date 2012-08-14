@@ -10,7 +10,11 @@ class GameSokoban
   @SOKOBAN_ON_GOAL: '+'
   @BOX_ON_GOAL:     '*'
 
-  @DIRECTIONS = ['up', 'down', 'left', 'right']
+  @DIRECTIONS = 
+    'up'   : row: -1
+    'down' : row:  1
+    'left' : col: -1
+    'right': col:  1
 
 
   set_level: (level) ->
@@ -90,7 +94,26 @@ class GameSokoban
   sokoban_pos: -> @_sokoban_pos
 
   valid_direction: (direction) ->
-  	direction in GameSokoban.DIRECTIONS
+  	d_keys = []
+  	for d_key, d of GameSokoban.DIRECTIONS
+  		d_keys.push d_key
+  	return direction in d_keys
+
+  sokoban_move: (direction) ->
+  	return unless @valid_direction(direction)
+  	new_pos = @_new_pos_by_direction(@_sokoban_pos, direction)
+  	@_sokoban_pos = new_pos
+
+  _clone_pos: (pos) ->
+  	{col: pos.col, row: pos.row}
+
+  _new_pos_by_direction: (pos, direction) ->
+  	_pos = @_clone_pos(pos)
+  	delta = GameSokoban.DIRECTIONS[direction]
+  	_pos.col += delta.col if delta.col
+  	_pos.row += delta.row if delta.row
+  	_pos
+
 
   cells2ascii: ->
   	rows = []
