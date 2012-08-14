@@ -113,3 +113,26 @@ describe "describe GameSokoban", ->
         game.sokoban_move 'up'
         expect( game.sokoban_pos() ).toEqual { col: 2, row: 1}
 
+      it "вниз", ->
+        game = new GameSokoban
+        game.set_level LEVEL3
+        expect( game.sokoban_pos() ).toEqual { col: 2, row: 2}
+
+        game.sokoban_move 'down'
+        expect( game.sokoban_pos() ).toEqual { col: 2, row: 3}
+
+      it "влево", ->
+        game = new GameSokoban
+        game.set_level LEVEL3
+        expect( game.sokoban_pos() ).toEqual { col: 2, row: 2}
+
+        game.sokoban_move 'left'
+        expect( game.sokoban_pos() ).toEqual { col: 1, row: 2}
+
+      it "вправо", ->
+        game = new GameSokoban
+        game.set_level LEVEL3
+        expect( game.sokoban_pos() ).toEqual { col: 2, row: 2}
+
+        game.sokoban_move 'right'
+        expect( game.sokoban_pos() ).toEqual { col: 3, row: 2}
