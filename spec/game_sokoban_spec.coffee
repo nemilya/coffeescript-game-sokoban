@@ -52,3 +52,17 @@ describe "describe GameSokoban", ->
       expect( info.goals_cnt   ).toEqual 2
       expect( info.box_on_goal_cnt ).toEqual 1
 
+    it "размер уровня", ->
+      game = new GameSokoban()
+      game.set_level(LEVEL1)
+      expect( game.level_size() ).toEqual { max_row: 2, max_col: 6 }
+    
+    it "валидный уровень, если есть 1 Сокобан, по крайней мере один ящик, и целей по количеству ящиков", ->
+      game = new GameSokoban
+      game.set_level(LEVEL1)
+      expect( game.level_valid() ).toBeTruthy()
+    
+    it "не валидный уровень", ->
+      game = new GameSokoban
+      game.set_level LEVEL2
+      expect( game.level_valid() ).toBeFalsy()
