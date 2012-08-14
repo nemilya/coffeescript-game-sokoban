@@ -10,6 +10,8 @@ class GameSokoban
   @SOKOBAN_ON_GOAL: '+'
   @BOX_ON_GOAL:     '*'
 
+  @DIRECTIONS = ['up', 'down', 'left', 'right']
+
 
   set_level: (level) ->
   	@level_cells = []
@@ -82,9 +84,13 @@ class GameSokoban
     return GameSokoban.GOAL if @is_goal_at_pos(pos)
     GameSokoban.FREE
 
-
   get_level: ->
   	@cells2ascii()
+
+  sokoban_pos: -> @_sokoban_pos
+
+  valid_direction: (direction) ->
+  	direction in GameSokoban.DIRECTIONS
 
   cells2ascii: ->
   	rows = []

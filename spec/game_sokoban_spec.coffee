@@ -82,3 +82,18 @@ describe "describe GameSokoban", ->
       game.set_level LEVEL1
       expect( game.get_level() ).toEqual LEVEL1
     
+  describe "Сокобан", ->
+    it "местоположение", ->
+      game = new GameSokoban
+      game.set_level LEVEL1
+      expect( game.sokoban_pos() ).toEqual { col: 1, row: 1}
+
+    it "#valid_direction?", ->
+      game = new GameSokoban
+      expect( game.valid_direction('up') ).toBeTruthy()
+      expect( game.valid_direction('down') ).toBeTruthy()
+      expect( game.valid_direction('left') ).toBeTruthy()
+      expect( game.valid_direction('right') ).toBeTruthy()
+
+      expect( game.valid_direction('jump') ).toBeFalsy()
+
