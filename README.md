@@ -38,22 +38,22 @@ https://github.com/nemilya/coffeescript-spec-demo
 инициализацию класса:
 
 ```coffeescript
-    {GameSokoban} = require('../lib/game_sokoban')
+{GameSokoban} = require('../lib/game_sokoban')
 
-    describe "describe GameSokoban", ->
-      it "инициализация класса", ->
-        game = new GameSokoban()
-        expect(game).toBeDefined()
+describe "describe GameSokoban", ->
+  it "инициализация класса", ->
+    game = new GameSokoban()
+    expect(game).toBeDefined()
 ```
 
 
 Заполняем в класс:
 
 ```coffeescript
-    class GameSokoban
+class GameSokoban
 
 
-    exports.GameSokoban = GameSokoban
+exports.GameSokoban = GameSokoban
 ```
 
 Не забываем `exports.GameSokoban = GameSokoban` - иначе класс не будет виден "снаружи".
@@ -154,8 +154,8 @@ https://github.com/nemilya/coffeescript-spec-demo
 Изменяем экспорт в классе:
 
 ```coffeescript
-    root = exports ? this
-    root.GameSokoban = GameSokoban
+  root = exports ? this
+  root.GameSokoban = GameSokoban
 ```
 
 Чтобы и в браузере подключалось.
