@@ -85,3 +85,35 @@ https://github.com/nemilya/coffeescript-spec-demo
 
 Добавляем файл исключений `.gitignore`
 
+
+И делаем 
+
+   git add .
+   git commit -m "init"
+
+Теперь текущее состояние добавлено в `git` репозиторий, локально.
+
+
+Всё готово чтобы идти по оригинальной спецификации что была для `Ruby` - 
+и конвертировать её в `CoffeeScript`.
+
+
+При переносе, конструкция вида на Ruby:
+
+    it "text" do
+      ...
+    end
+
+Заменяется на CoffeeScript, вида:
+
+    it "text", ->
+      ....
+
+
+Сделали загрузку уровня `set_level`, и получение элементов в ячейке `element_at_pos`
+
+Добавляем в `git`:
+
+    git add .
+    git commit -m "step1"
+
