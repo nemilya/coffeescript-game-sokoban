@@ -117,3 +117,5 @@ https://github.com/nemilya/coffeescript-spec-demo
     git add .
     git commit -m "step1"
 
+
+Сделали информацию по уровню.
