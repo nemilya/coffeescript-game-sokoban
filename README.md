@@ -208,8 +208,7 @@ exports.GameSokoban = GameSokoban
 
           function move(direction){
             game.sokoban_move(direction);
-            screen = game.get_level();
-            field.innerHTML = screen;
+            field.innerHTML = game.get_level();
           }
         </script>
 
