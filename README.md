@@ -1,7 +1,7 @@
 ﻿Игра Sokoban на CoffeeScript
 ============================
 
-Работающее [демо](http://nemilya.github.com/coffeescript-game-sokoban/game_sokoban.html)
+Работающее [DEMO](http://nemilya.github.com/coffeescript-game-sokoban/game_sokoban.html)
 
 Миграция Ruby кода из проекта: https://github.com/nemilya/ruby-game-sokoban
 
